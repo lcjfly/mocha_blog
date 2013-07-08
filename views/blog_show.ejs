@@ -1,0 +1,38 @@
+<h1><%= title%></h1>
+<div class="article">
+	<div class="create_at">
+		<%= article.created_at%>
+	</div>
+	<div class="title">
+		<%= article.title%>
+	</div>
+	<div class="body">
+		<%= article.body%>
+	</div>
+
+	<% article.comments.forEach(function(comment) { %>
+		<div class="comment">
+			<div class="author"><%= comment.author%></div>
+			<div class="comment"><%= comment.comment%></div>
+		</div>
+	<% })%>
+
+	<div>
+		<form action="/blog/addComment" method="post" accept-charset="utf-8">
+			<input type="hidden" name="_id" value="<%= article._id%>"></input>
+			<div>
+				<span>Author: </span>
+				<input type="text" name="author" id="addCommentAuthor" />
+			</div>
+			<div>
+				<span>Comment: </span>
+				<textarea name="comment" rows="5" id="addCommentComment">
+				</textarea>
+			</div>
+			<div id="editArticleSubmit">
+				<input type="submit" value="Send" />
+			</div>
+		</form>
+	</div>
+
+</div>

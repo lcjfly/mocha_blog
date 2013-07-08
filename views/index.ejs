@@ -1,0 +1,24 @@
+<h1><%= title %></h1>
+
+<a href="/blog/new">new</a>
+
+<% articles.forEach(function(article) { %>
+	<div class="card">
+		<div class="card_post">
+			<div class="title">
+				<a href="/blog/<%= article._id%>">
+					<%= article.title%>
+				</a>
+			</div>
+			<div class="created_at">
+				created at: <%= article.created_at%>
+			</div>
+			<div class="body">
+				<%= article.body%>
+			</div>
+			<div class="comments_count">
+				comments: <%= article.comments.length%>
+			</div>
+		</div>
+	</div>
+<% }) %>

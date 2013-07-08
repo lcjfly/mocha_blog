@@ -1,0 +1,16 @@
+<h1><%= title%></h1>
+<form action="/blog/new" method="post" accept-charset="utf-8">
+	<div>
+		<div>
+			<span>Title: </span>
+			<input type="text" name="title" id="editArticleTitle"></input>
+		</div>
+		<div>
+			<span>Body: </span>
+			<textarea name="body" rows="20" id="editArticleBody"></textarea>
+		</div>
+		<div id="editArticleSubmit">
+			<input type="submit" value="Send"></input>
+		</div>
+	</div>
+</form>
