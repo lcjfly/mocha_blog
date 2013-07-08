@@ -9,7 +9,6 @@ body {
 
 .card {
   text-align: left;
-  font-size: 2em;
   width: 100%;
   max-width: 960px;
   min-height: 20px;
@@ -22,6 +21,22 @@ body {
 }
 
 .card_post {
-  padding: .8em;
+  padding: 1em;
+}
+
+.card_post .title{
+  font-size: 2em;
+}
+
+.card_post .created_at {
+
+}
+
+.card_post .body {
+  font-size: 1.5em;
+}
+
+.card_post .comments_count {
+  font-size: 1.5em;
 }
 
