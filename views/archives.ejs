@@ -1,0 +1,15 @@
+<div class="card_container">
+	<div class="card">
+		<div class="card_archives">
+			<span><%= title %></span>
+			<ul>
+				<% archives.forEach(function(archive) { %>
+					<li>
+						<%= archive.created_at%>
+						<a href="/blog/<%= archive._id%>"><%= archive.title %></a>
+					</li>
+				<% }) %>
+			</ul>
+		</div>
+	</div>
+</div>

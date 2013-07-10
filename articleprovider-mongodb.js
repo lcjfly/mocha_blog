@@ -6,7 +6,7 @@ var Db = require('mongodb').Db,
 	ObjectID = require('mongodb').ObjectID;
 
 ArticleProvider = function(host, port) {
-	this.db = new Db('node-mongo-blog', new Server(host, port, {autoReconnect: true}, {}))
+	this.db = new Db('node-mongo-blog', new Server(host, port, {autoReconnect: true}, {}));
 	this.db.open(function() {});
 };
 
@@ -120,6 +120,16 @@ exports.ArticleProvider = ArticleProvider;
   created_at: new Date()
 }
 */
+
+new ArticleProvider().save([
+	{title: 'Post one', body: 'Body one', comments: [{author: 'mike', comment: 'hey'}, {author: 'tom', comment: 'sss'}]},
+	{title: 'Post two', body: 'Body two'},
+	{title: 'Post three', body: 'Body three'},
+	{title: 'Post four', body: 'Body four'},
+	{title: 'Post five', body: 'Body five'}
+], function(err, articles) {
+
+});
 
 
 

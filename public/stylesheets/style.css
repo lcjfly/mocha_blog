@@ -2,9 +2,53 @@ body {
   font-family: "Helvetica Neue", "Lucida Grande", "Arial";
   font-size: 62.5%;
   text-align: center;
-  text-stroke: 1px rgba(255,255,255,0.1);
   color: #555;
   background-color: #e6e6e6;
+}
+
+.header {
+  width: 100%;
+  background-color: #FB5642;
+  overflow: auto;
+  padding-top: .2em;
+}
+
+.header_container {
+  margin: 0 auto; 
+  width: 100%;
+  max-width: 960px;
+  color: white;
+}
+
+.header_container ul {
+  display: inline;
+}
+
+.header_container ul li {
+  float: left;
+}
+
+.header_container ul li a {
+  padding: .5em;
+  color: white;
+  font-size: 1em;
+  text-decoration: none;
+}
+
+ul#banner {
+  float: left;
+  font-size: 2.2em;
+}
+
+ul#navi {
+  float: right;
+  font-size: 1.5em;
+}
+
+.card_container {
+  padding: 2em 1em;
+  padding-bottom: 0;
+  font-size: 1.5em;
 }
 
 .card {
@@ -14,10 +58,15 @@ body {
   min-height: 20px;
   background-color: white;
   margin: 0 auto;
-  margin-top: 1em;
+  margin-bottom: 2em;
+
   -webkit-box-shadow: 0px 0px 10px rgba(0,0,0,.3);
      -moz-box-shadow: 0px 0px 10px rgba(0,0,0,.3);
           box-shadow: 0px 0px 10px rgba(0,0,0,.3);
+}
+
+.card a {
+  color: #555;
 }
 
 .card_post {
@@ -25,7 +74,7 @@ body {
 }
 
 .card_post .title{
-  font-size: 2em;
+  font-size: 2.5em;
 }
 
 .card_post .created_at {
@@ -33,10 +82,92 @@ body {
 }
 
 .card_post .body {
-  font-size: 1.5em;
+  padding-top: 1em;
+  padding-bottom: .5em;
 }
 
 .card_post .comments_count {
   font-size: 1.5em;
 }
 
+.page_container {
+  font-size: 1em;
+  overflow: auto;
+  text-decoration: none;
+}
+
+.page_container li {
+  line-height: 3em;
+  display: inline-block;
+}
+
+.card_page {
+  padding-left: 1em;
+  padding-right: 1em;
+}
+
+#page_previous {
+  display: inline-block;
+  width: 33%;
+  float: left;
+}
+
+#page {
+  display: inline-block;
+  width: 33%;
+  text-align: center;
+}
+
+#page_next {
+  width: 33%;
+  display: inline-block;
+  text-align: right;
+}
+
+.footer {
+  width: 100%;
+  height: 3em;
+
+  -webkit-box-shadow: 0px 2px 2px rgba(0,0,0,.3) inset;
+     -moz-box-shadow: 0px 2px 2px rgba(0,0,0,.3) inset;
+          box-shadow: 0px 2px 2px rgba(0,0,0,.3) inset;
+}
+
+.footer_container {
+  width: 100%;
+  margin: 0 auto;
+  max-width: 960px;
+  font-size: 1.5em;
+  text-align: left;
+  padding-top: 1em;
+  padding-bottom: .5em;
+  padding-left: 1em;
+}
+
+.footer_container a {
+  color: #555;
+}
+
+.card_about,
+.card_dream,
+.card_archives,
+.card_follow {
+  padding: 2.5em;
+}
+
+.card_follow ul,
+.card_dream ul,
+.card_archives ul,
+.card_follow ul {
+  padding-left: 2em;
+}
+
+.card span {
+  display: inline-block;
+  font-size: 1.5em;
+  padding-bottom: .8em;
+}
+
+.card ul li {
+  list-style: decimal;
+}
