@@ -26,12 +26,12 @@
 			<div class="card_page">
 				<ul>
 					<li id="page_previous">
-						<a href="/blog/page/<%= data.page_previous %>" title="上一页">
-							<% if(data.page_previous != -1) { %>
-								上一页
-							<% } else { %>
-								&nbsp;
-							<% }%>
+						<a href="/blog/page/<%= data.page_previous %>" title="上一页"
+							<% if(data.page_previous == -1) { %>
+								style="visibility:hidden"
+							<% } %>
+						>
+							上一页
 						</a>
 					</li>
 					<li id="page">
@@ -40,10 +40,12 @@
 						<%= data.page_max%>
 					</li>
 					<li id="page_next">
-						<a href="/blog/page/<%= data.page_next %>" title="下一页">
-							<% if(data.page_next != -1) { %>
-								下一页
+						<a href="/blog/page/<%= data.page_next %>" title="下一页"
+							<% if(data.page_next == -1) { %>
+								style="visibility:hidden"
 							<% } %>
+						>
+						下一页
 						</a>
 					</li>
 				</ul>

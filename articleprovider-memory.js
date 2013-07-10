@@ -54,7 +54,7 @@ ArticleProvider.prototype.findArchives = function(callback) {
 	for(var i=0; i<this.dummyData.length; i++) {
 		result[i] = {};
 		result[i]._id = this.dummyData[i]._id;
-		result[i].created_at = this.dummyData[i].created_at;
+		result[i].created_at = this.dummyData[i].created_at.Format("yyyy-MM-dd");
 		result[i].title = this.dummyData[i].title;
 	}
 

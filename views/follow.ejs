@@ -4,7 +4,7 @@
 			<span><%= title %></span>
 			 <ul>
 			 	<% follows.forEach(function(follow) {%>
-			 		<li><a href="<%= follow.url%>"><%= follow.name%></a></li>
+			 		<li><a href="<%= follow.url%>"><%= follow.name%></a>&lt;-<%= follow.comment%></li>
 			 	<% }) %>
 			 </ul>
 		</div>

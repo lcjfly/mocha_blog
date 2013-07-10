@@ -39,9 +39,9 @@ FollowProvider.prototype.save = function(follows, callback) {
 };
 
 new FollowProvider().save([
-	{url: 'http://google.com.hk', name: 'Google', comment: 'favourit site'},
-	{url: 'http://google.com.hk', name: 'Google', comment: 'favourit site'},
-	{url: 'http://google.com.hk', name: 'Google', comment: 'favourit site'}
+	{url: 'http://google.com.hk', name: 'Google', comment: '谁不爱谷歌？'},
+	{url: 'http://coolshell.cn', name: '酷壳', comment: '一位技术大牛的博客'},
+	{url: 'http://dribbble.com', name: 'Dribbble', comment: '设计类网站，有很多牛X设计'}
 ], function(err, articles) {
 
 });
