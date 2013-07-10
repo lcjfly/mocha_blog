@@ -17,7 +17,7 @@ FollowProvider.prototype.dummyData = [];
 
 FollowProvider.prototype.findAll = function(callback) {
 	callback(null, this.dummyData);
-}
+};
 
 FollowProvider.prototype.save = function(follows, callback) {
 
@@ -36,5 +36,14 @@ FollowProvider.prototype.save = function(follows, callback) {
 	}
 
 	callback(null, follows);
+};
 
-}
+new FollowProvider().save([
+	{url: 'http://google.com.hk', name: 'Google', comment: 'favourit site'},
+	{url: 'http://google.com.hk', name: 'Google', comment: 'favourit site'},
+	{url: 'http://google.com.hk', name: 'Google', comment: 'favourit site'}
+], function(err, articles) {
+
+});
+
+exports.FollowProvider = FollowProvider;

@@ -3,9 +3,9 @@
 		<div class="card_follow">
 			<span><%= title %></span>
 			 <ul>
-			 	<li><a href="#">f1</a></li>
-			 	<li><a href="#">f1</a></li>
-			 	<li><a href="#">f1</a></li>
+			 	<% follows.forEach(function(follow) {%>
+			 		<li><a href="<%= follow.url%>"><%= follow.name%></a></li>
+			 	<% }) %>
 			 </ul>
 		</div>
 	</div>

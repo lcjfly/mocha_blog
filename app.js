@@ -5,7 +5,8 @@
 
 var express = require('express'),
     routes = require('./routes'),
-    ArticleProvider = require('./articleprovider-memory').ArticleProvider;
+    ArticleProvider = require('./articleprovider-memory').ArticleProvider,
+    FollowProvider = require('./followProvider-memory').FollowProvider;
 
 var app = module.exports = express.createServer();
 
@@ -30,6 +31,8 @@ app.configure('production', function(){
 
 // Routes
 var articleProvider = new ArticleProvider('localhost', 27017);
+var followProvider = new FollowProvider('localhost', 27017);
+
 app.get('/', function(req, res) {
   articleProvider.findByPage(1, function(err, result) {
     res.render('index.ejs', {locals: {
@@ -70,9 +73,12 @@ app.get('/archives', function(req, res) {
 });
 
 app.get('/follow', function(req, res) {
-  res.render('follow.ejs', {locals: {
-    title: '我关注的博客'
-  }})
+  followProvider.findAll(function(err, result) {
+    res.render('follow.ejs', {locals: {
+    title: '我关注的博客',
+    follows: result
+  }});
+  });
 });
 
 app.get('/blog/new', function(req, res) {

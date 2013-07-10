@@ -5,7 +5,7 @@
 			<ul>
 				<% archives.forEach(function(archive) { %>
 					<li>
-						<%= archive.created_at%>
+						<%= archive.created_at.toLocaleString() %>
 						<a href="/blog/<%= archive._id%>"><%= archive.title %></a>
 					</li>
 				<% }) %>
