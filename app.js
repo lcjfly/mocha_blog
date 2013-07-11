@@ -110,8 +110,9 @@ app.get('/blog/:id', function(req, res) {
 
 app.post('/blog/addComment', function(req, res) {
   articleProvider.addCommentToArticle(req.body._id, {
-    person: req.body.person,
+    author: req.body.author,
     comment: req.body.comment,
+    email: req.body.email
     created_at: new Date()
   }, function(err, docs) {
     res.redirect('/blog/' + req.body._id);
