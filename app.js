@@ -5,8 +5,8 @@
 
 var express = require('express'),
     routes = require('./routes'),
-    ArticleProvider = require('./articleprovider-mongodb').ArticleProvider,
-    FollowProvider = require('./followprovider-mongodb').FollowProvider;
+    ArticleProvider = require('./articleprovider-memory').ArticleProvider,
+    FollowProvider = require('./followprovider-memory').FollowProvider;
 require('./date');
 
 var app = module.exports = express.createServer();
