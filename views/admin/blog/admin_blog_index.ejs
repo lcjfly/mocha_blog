@@ -2,6 +2,7 @@
 	<div class="card">
 		<div class="card_archives">
 			<span><%= title %></span>
+			<a href="/admin/blog/new">发布新文章</a>
 			<% for(var key in archives) { %>
 				<div class="archive_year">
 					<p><%= key %></p>
@@ -9,9 +10,9 @@
 					<ul>
 						<% archives[key].forEach(function(archive) { %>
 							<li>
+								<a class="delete_article" href="/admin/blog/delete/<%= archive._id%>">删除文章</a>
 								<%= archive.created_at %>
-								<a href="/blog/<%= archive._id%>"><%= archive.title %></a>
-								( <%= archive.comments.length %>个评论)
+								<a href="/admin/blog/<%= archive._id%>"><%= archive.title %></a>
 							</li>
 						<% }) %>
 					</ul>

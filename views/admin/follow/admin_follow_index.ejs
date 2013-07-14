@@ -1,0 +1,17 @@
+<div class="card_container">
+	<div class="card">
+		<div class="card_follow">
+			<span><%= title %></span>
+
+			<a href="/admin/follow/new">添加新关注的博客</a>
+			 <ul>
+			 	<% follows.forEach(function(follow) {%>
+			 		<li>
+			 			<a class="delete" href="/admin/follow/delete/<%= follow._id%>">删除关注</a>
+			 			<a href="<%= follow.url%>"><%= follow.name%></a>&lt;-<%= follow.comment%>
+			 		</li>
+			 	<% }) %>
+			 </ul>
+		</div>
+	</div>
+</div>

@@ -5,6 +5,8 @@
     <title><%= title %></title>
     <link rel='stylesheet' href='/stylesheets/reset.css' />
     <link rel='stylesheet' href='/stylesheets/style.css' />
+    <script src="/javascripts/jquery.js"></script>
+    <!-- <script src="/js"></script> -->
   </head>
   <body>
   	<div class="header">
@@ -23,12 +25,36 @@
 
     <%- body %>
 
-	<div class="footer">
-		<div class="footer_container">
-			Lovingly made by lu chenjie<br />
-			Thanks <a href="#">NodeJS</a> , <a href="#">Express</a> and <a href="#">MongoDB</a>. Host by <a href="#">Heroku</a>.
-		</div>
-	</div>
+  	<div class="footer">
+  		<div class="footer_container">
+  			Lovingly made by lu chenjie<br />
+  			Thanks <a href="#">NodeJS</a> , <a href="#">Express</a> and <a href="#">MongoDB</a>. Host by <a href="#">Heroku</a>.
+  		</div>
+  	</div>
+
+    <a href="#" class="go-top">回到顶部</a>
+
+  <script>
+    $(document).ready(function() {
+      // Show or hide the sticky footer button
+      $(window).scroll(function() {
+        if ($(this).scrollTop() > 200) {
+          $('.go-top').fadeIn(200);
+        } else {
+          $('.go-top').fadeOut(200);
+        }
+      });
+      
+      // Animate the scroll to top
+      $('.go-top').click(function(event) {
+        event.preventDefault();
+        
+        $('html, body').animate({scrollTop: 0}, 300);
+      })
+    });
+  </script>
+
+
 
   </body>
 </html>

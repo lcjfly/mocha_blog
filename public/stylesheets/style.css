@@ -6,6 +6,16 @@ body {
   background-color: #e6e6e6;
 }
 
+input{
+  width: 20em;
+  height: 2em;
+  font-size: 1em;
+}
+
+textarea {
+  font-size: 1em;
+}
+
 .header {
   width: 100%;
   background-color: #FB5642;
@@ -151,7 +161,9 @@ ul#navi {
 .card_about,
 .card_dream,
 .card_archives,
-.card_follow {
+.card_follow,
+.card_login,
+.card_admin {
   padding: 2.5em;
 }
 
@@ -162,9 +174,25 @@ ul#navi {
   padding-left: 2em;
 }
 
+.card_follow ul li {
+  line-height: 2em;
+}
+
 .card_comment {
   padding: 1em;
-  font-size: 1em;
+  font-size: .8em;
+}
+
+.card_admin a {
+  display: inline-block;
+  padding-bottom: 1em;
+}
+
+a.a_btn {
+  background-color: #36A7DA;
+  color: white;
+  padding: .5em 1em;
+  display: inline-block;
 }
 
 .card span {
@@ -175,4 +203,54 @@ ul#navi {
 
 .card ul li {
   list-style: decimal;
+}
+
+.archive_year {
+  padding-bottom: 2em;
+}
+
+.archive_year ul li {
+  list-style-type: square;
+  line-height: 2em;
+}
+
+.archive_year p {
+  font-size: 2em;
+  border-bottom: 1px solid black;
+  margin-bottom: .5em;
+}
+
+a.delete {
+  background-color: red;
+  color: white;
+  padding-bottom: .5;
+}
+
+#comment_tip {
+  color:red;
+  display:inline-block;
+}
+
+section {
+  text-indent: 2em;
+}
+
+
+/***********************************************************************************************/
+/* Go to top Button */
+/***********************************************************************************************/
+.go-top {
+  position: fixed;
+  bottom: 2em;
+  right: 2em;
+  text-decoration: none;
+  color: white;
+  background-color: rgba(0, 0, 0, 0.3);
+  font-size: 12px;
+  padding: 1em;
+  display: none;
+}
+
+.go-top:hover {
+  background-color: rgba(0, 0, 0, 0.6);
 }

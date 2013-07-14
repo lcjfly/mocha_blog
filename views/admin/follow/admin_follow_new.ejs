@@ -1,0 +1,24 @@
+<div class="card_container">
+	<div class="card">
+		<div class="card_follow">
+			<h1><%= title%></h1>
+			<form id="form_follow_new" action="/admin/follow/new" method="post" accept-charset="utf-8">
+				<div>
+					<input type="text" name="name" placeholder="博客名称"></input><br /><br />
+					<input type="text" name="url" placeholder="博客地址"></input><br /><br />
+					<textarea name="comment" rows="10" cols="30" placeholder="我的评价"></textarea><br />
+					<a id="submit_new_follow" class="a_btn">添加新关注</a>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+
+<script>
+	$(function() {
+		document.querySelector('#submit_new_follow').addEventListener('click', function(ev){
+		    ev.preventDefault();
+		    $('#form_follow_new').submit();
+		}, false);
+	});
+</script>

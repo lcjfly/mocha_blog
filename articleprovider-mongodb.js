@@ -1,4 +1,4 @@
-
+var articles_per_page = 5;
 var Db = require('mongodb').Db,
 	Connection = require('mongodb').Connection,
 	Server = require('mongodb').Server,
@@ -6,7 +6,7 @@ var Db = require('mongodb').Db,
 	ObjectID = require('mongodb').ObjectID;
 
 ArticleProvider = function(host, port) {
-	this.db = new Db('node-mongo-blog', new Server(host, port, {autoReconnect: true}, {}));
+	this.db = new Db('mocha_blog', new Server(host, port, {autoReconnect: true}, {}));
 	this.db.open(function() {});
 };
 
@@ -46,12 +46,68 @@ ArticleProvider.prototype.findById = function(id, callback) {
 				if(err) {
 					callback(err);
 				} else {
+					article.created_at = article.created_at.Format('yyyy-MM-dd');
 					callback(null, article);
 				}
 			});
 		}
 	});
 };
+
+ArticleProvider.prototype.findByPage = function(page_no, callback) {
+	this.findAll(function(err, article_collection) {
+		// 请求页不存在，返回'/'
+		if(page_no < 1 || (page_no - 1)*articles_per_page > article_collection.length) {
+			this.findByPage(1, callback);
+		} else {
+			// 返回文章列表
+			var result = {
+				articles: article_collection.slice((page_no - 1)*articles_per_page, (page_no - 1)*articles_per_page + articles_per_page),
+				page_on: page_no,
+				page_max: (article_collection.length%articles_per_page)==0?article_collection.length/articles_per_page:parseInt(article_collection.length/articles_per_page)+1,
+				page_previous: -1,
+				page_next: -1
+			}
+
+			for(var i=0; i<result.articles.length; i++) {
+				result.articles[i].created_at = result.articles[i].created_at.Format('yyyy-MM-dd');
+			}
+
+			// 上一页页码
+			if(page_no > 1) {
+				result.page_previous = parseInt(page_no) - 1;
+			}
+
+			// 下一页页码
+			if(page_no*articles_per_page < article_collection.length) {
+				result.page_next = parseInt(page_no) + 1;
+			}
+
+			callback(null, result)
+		}
+	});
+};
+
+ArticleProvider.prototype.findArchives = function(callback) {
+	var results = {},
+		result = {};
+
+	this.findAll(function(err, articles) {
+		for(var i=0; i<articles.length; i++) {
+			result = articles[i];
+			var created_at = articles[i].created_at;
+			result.created_at = created_at.Format('yyyy-MM-dd');
+
+			var article_year = created_at.Format('yyyy');
+			if(results[article_year] === undefined) {
+				results[article_year] = [];
+			}
+			results[article_year].push(result);
+		}
+
+		callback(null, results);
+	});
+}
 
 ArticleProvider.prototype.save = function(articles, callback) {
 	this.getCollection(function(err, article_collection) {
@@ -74,12 +130,33 @@ ArticleProvider.prototype.save = function(articles, callback) {
 
 			}
 
-			article_collection.insert(articles, function() {
-				callback(null, articles);
+			article_collection.insert(articles, function(err) {
+				if(err) {
+					callback(err);
+				} else {
+					callback(null, article_collection);
+				}
 			});
 		}
 	});
 };
+
+ArticleProvider.prototype.delete = function(article_id, callback) {
+	this.getCollection(function(err, article_collection) {
+		if(err) {
+			callback(err);
+		} else {
+			article_id = article_collection.db.bson_serializer.ObjectID.createFromHexString(article_id);
+			article_collection.remove({_id: article_id}, function(err) {
+				if(err) {
+					callback(err);
+				} else {
+					callback(null);
+				}
+			});
+		}
+	});
+}
 
 ArticleProvider.prototype.addCommentToArticle = function(articleId, comment, callback) {
 	this.getCollection(function(err, article_collection) {
@@ -105,8 +182,6 @@ ArticleProvider.prototype.addCommentToArticle = function(articleId, comment, cal
 	});
 };
 
-exports.ArticleProvider = ArticleProvider;
-
 /*
 {
   _id: 0,
@@ -121,15 +196,9 @@ exports.ArticleProvider = ArticleProvider;
 }
 */
 
-new ArticleProvider().save([
-	{title: 'Post one', body: 'Body one', comments: [{author: 'mike', comment: 'hey'}, {author: 'tom', comment: 'sss'}]},
-	{title: 'Post two', body: 'Body two'},
-	{title: 'Post three', body: 'Body three'},
-	{title: 'Post four', body: 'Body four'},
-	{title: 'Post five', body: 'Body five'}
-], function(err, articles) {
 
-});
+
+exports.ArticleProvider = ArticleProvider;
 
 
 

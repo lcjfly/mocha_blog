@@ -1,0 +1,31 @@
+<div class="card_container">
+	<div class="card">
+		<div class="card_post">
+			<div class="title">
+				<a href="/blog/<%= article._id%>">
+					<%= article.title%>
+				</a>
+			</div>
+			<div class="created_at">
+				<%= article.created_at%>
+			</div>
+			<div class="body">
+				<%= article.body%>
+			</div>
+			<div class="comments_count">
+				<%= article.comments.length%> comments
+			</div>
+		</div>
+	</div>
+
+	<% article.comments.forEach(function(comment) { %>
+		<div class="card">
+			<div class="card_comment">
+				<span><%= comment.author%>:</span><br />
+				<span><%= comment.comment%></span><br />
+				<a href="/admin/blog/comment/delete/">删除该评论</a>
+			</div>
+		</div>
+	<% })%>
+
+</div>

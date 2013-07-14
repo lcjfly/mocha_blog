@@ -10,7 +10,9 @@
 				<%= article.created_at%>
 			</div>
 			<div class="body">
-				<%= article.body%>
+				<section>
+					<%= article.body%>
+				</section>
 			</div>
 			<div class="comments_count">
 				<%= article.comments.length%> comments
@@ -21,7 +23,7 @@
 	<% article.comments.forEach(function(comment) { %>
 		<div class="card">
 			<div class="card_comment">
-				<span><%= comment.author%>:</span><br />
+				<span><a href="<%= comment.website %>"><%= comment.author%></a>:</span>
 				<span><%= comment.comment%></span>
 			</div>
 		</div>
@@ -29,26 +31,42 @@
 
 	<div class="card">
 		<div class="card_comment">
-			<form action="/blog/addComment" method="post" accept-charset="utf-8">
+			<form id="form_comment" action="/blog/addComment" method="post" accept-charset="utf-8">
+				<span>留下你的足迹</span><br />
 				<input type="hidden" name="_id" value="<%= article._id%>"></input>
-				<div>
-					<span>Author: </span>
-					<input type="text" name="author" id="addCommentAuthor" />
-				</div>
-				<div>
-					<span>Comment: </span>
-					<textarea name="comment" rows="5" id="addCommentComment">
-					</textarea>
-				</div>
-				<div>
-					<span>Email: </span>
-					<input type="text" name="email" id="addCommentEmail" />
-				</div>
-				<div id="editArticleSubmit">
-					<input type="submit" value="Send" />
-				</div>
+				<input type="text" name="author" id="author" placeholder="你的名字" />
+				<br /><br />
+				<input type="text" name="email" id="email" placeholder="邮箱地址" /><br /><br />
+				<input type="text" name="website" id="website" placeholder="主页地址" /><br /><br />
+				<textarea name="comment" rows="5" cols="30" id="comment" placeholder="评论内容"></textarea>
+				必填
+				<br /><br />
+				<a id="btn_comment_new" class="a_btn">发表评论</a><br />
+				<span id="comment_tip"></span>
 			</form>
 		</div>
 	</div>
+
+	<script>
+		$(function() {
+			document.querySelector('#btn_comment_new').addEventListener('click', function(ev){
+			    ev.preventDefault();
+
+			    // 输入验证
+			    var author = $('#author').val();
+			    var email = $('#email').val();
+			    var comment = $('#comment').val();
+			    if(comment.trim() === '') {
+			    	$('#comment_tip').html('留言内容不能为空');
+			    } else {
+			    	if(author.trim() === '') {
+			    		$('#author').val('路人');
+			    	}
+
+			   		$('#form_comment').submit();
+			    }
+			}, false);
+		});
+	</script>
 
 </div>
