@@ -45,9 +45,11 @@ textarea {
   text-decoration: none;
 }
 
-ul#banner {
+#banner a {
   float: left;
-  font-size: 2.2em;
+  font-size: 2.5em;
+  color: white;
+  text-decoration: none;
 }
 
 ul#navi {
@@ -84,7 +86,7 @@ ul#navi {
 }
 
 .card_post .title{
-  font-size: 2.5em;
+  font-size: 2em;
 }
 
 .card_post .created_at {
@@ -97,7 +99,7 @@ ul#navi {
 }
 
 .card_post .comments_count {
-  font-size: 1.5em;
+  font-size: 1.2em;
 }
 
 .page_container {

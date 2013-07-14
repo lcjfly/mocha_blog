@@ -5,9 +5,39 @@ var Db = require('mongodb').Db,
 	BSON = require('mongodb').BSON,
 	ObjectID = require('mongodb').ObjectID;
 
+var options = {
+    host: 'dharma.mongohq.com',
+      port: 10053,
+      db: 'mocha_blog',
+      username: 'lcjfly',
+      password: 'fuxu2011!'
+  };
+
 ArticleProvider = function(host, port) {
-	this.db = new Db('mocha_blog', new Server(host, port, {autoReconnect: true}, {}));
-	this.db.open(function() {});
+	this.db = new Db(
+        options.db, 
+        new Server(
+            options.host, 
+    	    options.port, 
+    	    {auto_reconnect: true}, 
+    	    {}
+        )
+    );
+
+	this.db.open(function(err,data){
+	  if(data){
+	    data.authenticate(options.username, options.password, function(err2,data2){
+	         if(data2){
+	             console.log("Database opened");
+	         }
+	         else{
+	             console.log(err2);
+	         }
+	    });
+	  } else {
+	       console.log(err);
+	  }
+	});
 };
 
 ArticleProvider.prototype.getCollection = function(callback) {
@@ -125,9 +155,10 @@ ArticleProvider.prototype.save = function(articles, callback) {
 					article.comments = [];
 				}
 				for(var j=0; j<article.comments.length; j++) {
-					article.comments[j].created_at = new Date();
+					if(article.comments[j].created_at === undefined) {
+						article.comments[j].created_at = new Date();
+					}
 				}
-
 			}
 
 			article_collection.insert(articles, function(err) {

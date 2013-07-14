@@ -5,7 +5,7 @@
 
 var express = require('express'),
     routes = require('./routes'),
-    ArticleProvider = require('./articleprovider-memory').ArticleProvider,
+    ArticleProvider = require('./articleprovider-mongodb').ArticleProvider,
     FollowProvider = require('./followprovider-memory').FollowProvider;
 require('./date');
 
@@ -46,7 +46,7 @@ function checkAuth(req, res, next) {
 }
 
 // Routes
-var articleProvider = new ArticleProvider('localhost', 27017);
+var articleProvider = new ArticleProvider();
 var followProvider = new FollowProvider('localhost', 27017);
 
 /*
