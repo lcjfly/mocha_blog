@@ -3,40 +3,37 @@ var Db = require('mongodb').Db,
 	Connection = require('mongodb').Connection,
 	Server = require('mongodb').Server,
 	BSON = require('mongodb').BSON,
-	ObjectID = require('mongodb').ObjectID;
+	ObjectID = require('mongodb').ObjectID,
+	db_options = require('./config').db_options;
 
-var options = {
-    host: 'dharma.mongohq.com',
-      port: 10053,
-      db: 'mocha_blog',
-      username: 'lcjfly',
-      password: 'fuxu2011!'
-  };
 
-ArticleProvider = function(host, port) {
+
+ArticleProvider = function() {
 	this.db = new Db(
-        options.db, 
+        db_options.db, 
         new Server(
-            options.host, 
-    	    options.port, 
+            db_options.host, 
+    	    db_options.port, 
     	    {auto_reconnect: true}, 
     	    {}
         )
     );
 
 	this.db.open(function(err,data){
-	  if(data){
-	    data.authenticate(options.username, options.password, function(err2,data2){
-	         if(data2){
-	             console.log("Database opened");
-	         }
-	         else{
-	             console.log(err2);
-	         }
-	    });
-	  } else {
-	       console.log(err);
-	  }
+		if(db_options.username) {
+			if(data){
+				data.authenticate(db_options.username, db_options.password, function(err2,data2){
+				     if(data2){
+				         console.log("Database opened");
+				     }
+				     else{
+				         console.log(err2);
+				     }
+				});
+			} else {
+			   console.log(err);
+			}
+		}
 	});
 };
 
@@ -76,7 +73,7 @@ ArticleProvider.prototype.findById = function(id, callback) {
 				if(err) {
 					callback(err);
 				} else {
-					article.created_at = article.created_at.Format('yyyy-MM-dd');
+					article.created_at = article.created_at.Format('yyyy/MM/dd');
 					callback(null, article);
 				}
 			});
@@ -100,7 +97,7 @@ ArticleProvider.prototype.findByPage = function(page_no, callback) {
 			}
 
 			for(var i=0; i<result.articles.length; i++) {
-				result.articles[i].created_at = result.articles[i].created_at.Format('yyyy-MM-dd');
+				result.articles[i].created_at = result.articles[i].created_at.Format('yyyy/MM/dd');
 			}
 
 			// 上一页页码
@@ -126,7 +123,7 @@ ArticleProvider.prototype.findArchives = function(callback) {
 		for(var i=0; i<articles.length; i++) {
 			result = articles[i];
 			var created_at = articles[i].created_at;
-			result.created_at = created_at.Format('yyyy-MM-dd');
+			result.created_at = created_at.Format('yyyy/MM/dd');
 
 			var article_year = created_at.Format('yyyy');
 			if(results[article_year] === undefined) {

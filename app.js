@@ -6,7 +6,8 @@
 var express = require('express'),
     routes = require('./routes'),
     ArticleProvider = require('./articleprovider-mongodb').ArticleProvider,
-    FollowProvider = require('./followprovider-memory').FollowProvider;
+    FollowProvider = require('./followprovider-memory').FollowProvider,
+    fs = require('fs');
 require('./date');
 
 var app = module.exports = express.createServer();
@@ -63,6 +64,26 @@ articleProvider.save([
     
 });
 */
+
+app.get('/upload', function(req, res) {
+  res.render('admin/upload.ejs');
+});
+
+app.post('/upload', function(req, res) {
+  // 获得文件的临时路径
+  var tmp_path = req.files.thumbnail.path;
+  // 指定文件上传后的目录 - 示例为"images"目录。 
+  var target_path = './public/images/' + req.files.thumbnail.name;
+  // 移动文件
+  fs.rename(tmp_path, target_path, function(err) {
+    if (err) throw err;
+    // 删除临时文件夹文件, 
+    fs.unlink(tmp_path, function() {
+       if (err) throw err;
+       res.send('File uploaded to: ' + target_path + ' - ' + req.files.thumbnail.size + ' bytes');
+    });
+  });
+}; 
 
 app.get('/js', function(req, res) {
   res.send('alert("this is from server");');
