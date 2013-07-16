@@ -66,7 +66,9 @@ articleProvider.save([
 */
 
 app.get('/upload', function(req, res) {
-  res.render('admin/upload.ejs');
+  res.render('admin/upload.ejs', {locals: {
+    title: '上传文件'
+  }});
 });
 
 app.post('/upload', function(req, res) {
@@ -83,10 +85,10 @@ app.post('/upload', function(req, res) {
        res.send('File uploaded to: ' + target_path + ' - ' + req.files.thumbnail.size + ' bytes');
     });
   });
-}; 
+}); 
 
 app.get('/js', function(req, res) {
-  res.send('alert("this is from server");');
+  res.send(req.ip + ' ' + req.host);
 });
 
 app.get('/', function(req, res) {
