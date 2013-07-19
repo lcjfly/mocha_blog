@@ -172,6 +172,23 @@ ArticleProvider.prototype.save = function(articles, callback) {
 	});
 };
 
+ArticleProvider.prototype.update = function(article_id, article_title, article_body, callback) {
+	this.getCollection(function(err, article_collection) {
+		if(err) {
+			callback(err);
+		} else {
+			article_collection.update(
+				{
+					_id: article._id
+				},
+		        {
+		        	"$set": {title: article_title, body: article_body}
+		        }
+			);
+		}
+	});
+};
+
 ArticleProvider.prototype.delete = function(article_id, callback) {
 	this.getCollection(function(err, article_collection) {
 		if(err) {

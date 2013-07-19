@@ -200,6 +200,15 @@ app.post('/admin/blog/new', checkAuth, function(req, res) {
   });
 });
 
+app.get('/admin/blog/update/:id', checkAuth, function(req, res) {
+  articleProvider.findById(req.params.id, function(err, article) {
+    res.render('admin/blog/admin_blog_update.ejs', {locals: {
+      title: '更新文章',
+      article: article
+    }});
+  });
+});
+
 app.get('/admin/blog/delete/:id', checkAuth, function(req, res) {
   articleProvider.delete(req.params.id, function(err) {
     res.redirect('/admin/blog');
