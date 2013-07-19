@@ -7,6 +7,7 @@ var express = require('express'),
     routes = require('./routes'),
     ArticleProvider = require('./articleprovider-mongodb').ArticleProvider,
     FollowProvider = require('./followprovider-memory').FollowProvider,
+    //partials =require('express-partials'),
     fs = require('fs');
 require('./date');
 
@@ -17,6 +18,7 @@ var app = module.exports = express.createServer();
 app.configure(function(){
   app.set('views', __dirname + '/views');
   app.set('view engine', 'ejs');
+  //app.use(partials());
   app.use(express.bodyParser());
   app.use(express.cookieParser());
   app.use(express.session({ secret: 'something'}));
@@ -48,7 +50,7 @@ function checkAuth(req, res, next) {
 
 // Routes
 var articleProvider = new ArticleProvider();
-var followProvider = new FollowProvider('localhost', 27017);
+var followProvider = new FollowProvider();
 
 /*
 articleProvider.save([
@@ -81,15 +83,11 @@ app.post('/upload', function(req, res) {
     if (err) throw err;
     // 删除临时文件夹文件, 
     fs.unlink(tmp_path, function() {
-       if (err) throw err;
-       res.send('File uploaded to: ' + target_path + ' - ' + req.files.thumbnail.size + ' bytes');
+        if (err) throw err;
+        res.send('文件上传至: ' + target_path + '，文件大小：' + req.files.thumbnail.size + ' 字节');
     });
   });
 }); 
-
-app.get('/js', function(req, res) {
-  res.send(req.ip + ' ' + req.host);
-});
 
 app.get('/', function(req, res) {
   articleProvider.findByPage(1, function(err, result) {
@@ -281,5 +279,5 @@ app.get('/admin/logout', function(req, res) {
 var port = process.env.PORT || 3000;
 
 app.listen(port, function(){
-  console.log("Express server listening on port %d in %s mode", app.address().port, app.settings.env);
+  console.log("Express server listening on port %d in %s mode", port, app.settings.env);
 });

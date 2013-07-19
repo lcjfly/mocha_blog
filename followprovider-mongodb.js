@@ -13,41 +13,37 @@ var Db = require('mongodb').Db,
 	Connection = require('mongodb').Connection,
 	Server = require('mongodb').Server,
 	BSON = require('mongodb').BSON,
-	ObjectID = require('mongodb').ObjectID;
+	ObjectID = require('mongodb').ObjectID,
+	db_options = require('./config').db_options;
 
-var options = {
-    host: 'dharma.mongohq.com',
-      port: 10053,
-      db: 'mocha_blog',
-      username: 'lcjfly',
-      password: 'fuxu2011!'
-  };
 
 FollowProvider = function() {
 	
 	this.db = new Db(
-        options.db, 
+        db_options.db, 
         new Server(
-            options.host, 
-    	    options.port, 
+            db_options.host, 
+    	    db_options.port, 
     	    {auto_reconnect: true}, 
     	    {}
         )
     );
 	
 	this.db.open(function(err,data){
-	  if(data){
-	    data.authenticate(options.username, options.password, function(err2,data2){
-	         if(data2){
-	             console.log("Database opened");
-	         }
-	         else{
-	             console.log(err2);
-	         }
-	    });
-	  } else {
-	       console.log(err);
-	  }
+		if(db_options.username) {
+		  	if(data){
+		    	data.authenticate(db_options.username, db_options.password, function(err2,data2){
+		         	if(data2){
+		            	console.log("Database opened");
+		         	}
+		         	else{
+		             	console.log(err2);
+		         	}
+		    	});
+		  	} else {
+		       	console.log(err);
+		  	}
+		}
 	});
 };
 
