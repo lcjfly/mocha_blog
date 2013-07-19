@@ -119,8 +119,7 @@ ul#navi {
 }
 
 .card_page {
-  padding-left: 1em;
-  padding-right: 1em;
+  padding: 1% 2%;
 }
 
 #page_previous {
@@ -170,7 +169,7 @@ ul#navi {
 .card_follow,
 .card_login,
 .card_admin {
-  padding: 2.5em;
+  padding: 3%;
 }
 
 .card_follow ul,
