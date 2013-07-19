@@ -74,6 +74,9 @@ ArticleProvider.prototype.findById = function(id, callback) {
 					callback(err);
 				} else {
 					article.created_at = article.created_at.Format('yyyy/MM/dd');
+					for(var i=0;i<article.comments.length; i++) {
+						article.comments[i].created_at = article.comments[i].created_at.Format('yyyy/MM/dd hh:mm:ss');
+					}
 					callback(null, article);
 				}
 			});

@@ -16,6 +16,14 @@ textarea {
   font-size: 1em;
 }
 
+/* Flexible Images */
+img {
+  max-width: 100%;
+  height: auto !important;
+  vertical-align: middle;
+    height: 100%;
+}
+
 .header {
   width: 100%;
   background-color: #36A7DA;
@@ -24,7 +32,7 @@ textarea {
 
 .header_container {
   margin: 0 auto; 
-  width: 100%;
+  width: 96%;
   max-width: 960px;
   color: white;
 }
@@ -78,7 +86,7 @@ ul#navi {
 }
 
 .card_post {
-  padding: 1em;
+  padding: 3%;
 }
 
 .card_post .title{
@@ -143,7 +151,7 @@ ul#navi {
 }
 
 .footer_container {
-  width: 100%;
+  width: 92%;
   margin: 0 auto;
   max-width: 960px;
   font-size: 1.5em;
@@ -193,6 +201,10 @@ a.a_btn {
   display: inline-block;
 }
 
+a.a_btn:hover {
+  color: #555;
+}
+
 .card span {
   display: inline-block;
   font-size: 1.5em;
@@ -227,10 +239,6 @@ a.delete {
 #comment_tip {
   color:red;
   display:inline-block;
-}
-
-section {
-  text-indent: 2em;
 }
 
 
