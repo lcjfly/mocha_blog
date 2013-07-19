@@ -52,7 +52,7 @@ ArticleProvider.prototype.findAll = function(callback) {
 		if(err) {
 			callback(err);
 		} else {
-			article_collection.find().toArray(function(err, results) {
+			article_collection.find().sort( { created_at: -1 } ).toArray(function(err, results) {
 				if(err) {
 					callback(err);
 				} else{

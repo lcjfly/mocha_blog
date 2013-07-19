@@ -12,4 +12,4 @@ var db_localhost = {
 	db: 'mocha_blog'
 }
 
-exports.db_options = db_mongohq;
+exports.db_options = db_localhost;
