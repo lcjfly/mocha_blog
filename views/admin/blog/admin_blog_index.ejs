@@ -10,7 +10,12 @@
 					<ul>
 						<% archives[key].forEach(function(archive) { %>
 							<li>
-								<a class="delete_article" href="/admin/blog/delete/<%= archive._id%>">删除文章</a>
+								<a class="delete_article" href="/admin/blog/delete/<%= archive._id%>">
+									删除文章
+								</a>&nbsp;
+								<a class="update_article" href="/admin/blog/update/<%= archive._id%>">
+									更新文章
+								</a>
 								<%= archive.created_at %>
 								<a href="/admin/blog/<%= archive._id%>"><%= archive.title %></a>
 							</li>

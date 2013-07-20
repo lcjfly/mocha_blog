@@ -1,0 +1,41 @@
+<div class="card_container">
+	<div class="card">
+		<div class="card_post">
+			<form id="form_blog_update" action="/admin/blog/update" method="post" accept-charset="utf-8">
+				<div class="title">
+					<input type="hidden" name="_id" value="<%= article._id%>" />
+					<label for="title">标题</label>
+					<input type="text" name="title" value="<%= article.title%>" />
+				</div>
+				<div class="created_at">
+					<%= article.created_at%>
+				</div>
+				<div class="body">
+					<textarea name="body" rows="20">
+						<%- article.body%>
+					</textarea>
+				</div>
+				
+				<a id="submit_preview_article" class="a_btn">预览</a>
+				<a id="submit_update_article" class="a_btn">提交更新</a>
+			</form>
+		</div>
+	</div>
+</div>
+
+<script>
+	$(function() {
+		document.querySelector('#submit_update_article').addEventListener('click', function(ev){
+		    ev.preventDefault();
+		     $("#form_blog_update").attr("action","/admin/blog/update");
+		    $('#form_blog_update').submit();
+		}, false);
+
+		document.querySelector('#submit_preview_article').addEventListener('click', function(ev){
+		    ev.preventDefault();
+		    $("#form_blog_update").attr("action","/admin/blog/preview");
+    		$("#form_blog_update").attr("target","_blank");
+		    $('#form_blog_update').submit();
+		}, false);
+	});
+</script>

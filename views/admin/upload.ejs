@@ -1,4 +1,35 @@
-<form method="post" enctype="multipart/form-data" action="/upload">
-  <input type="file" name="thumbnail">
-  <input type="submit">
-</form>
+<div class="card_container">
+	<div class="card">
+		<div class="card_post">
+			<form method="post" enctype="multipart/form-data" action="/admin/upload">
+			  <input type="file" name="thumbnail">
+			  <input type="submit">
+			</form>
+			
+			<% files.forEach(function(file) { %>
+				<div>
+					<form id="form_upload_update" method="post" action="/admin/upload/rename" accept-charset="utf-8">
+						<a href="/admin/upload/delete/<%= file %>">删除</a>
+						<img src="/images/<%= file %>" width="200px"/>
+						<%= file %>
+					
+						<input type="text" name="newfilename" />
+						<input type="hidden" name="oldfilename" value="<%= file %>" />
+						<a class="a_btn" id="submit_upload_rename">重命名</a>
+					</form>
+				</div>
+			<% }) %>
+			
+		</div>
+	</div>
+</div>
+
+<script>
+	$(function() {
+		document.querySelector('#submit_upload_rename').addEventListener('click', function(ev){
+		    ev.preventDefault();
+		    $('#form_upload_update').submit();
+		}, false);
+
+	});
+</script>

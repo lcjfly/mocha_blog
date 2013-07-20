@@ -6,7 +6,7 @@
 var express = require('express'),
     routes = require('./routes'),
     ArticleProvider = require('./articleprovider-mongodb').ArticleProvider,
-    FollowProvider = require('./followprovider-memory').FollowProvider,
+    FollowProvider = require('./followprovider-mongodb').FollowProvider,
     //partials =require('express-partials'),
     fs = require('fs');
 require('./date');
@@ -18,6 +18,7 @@ var app = module.exports = express.createServer();
 app.configure(function(){
   app.set('views', __dirname + '/views');
   app.set('view engine', 'ejs');
+  app.set('layout', 'layout') // defaults to 'layout' 
   //app.use(partials());
   app.use(express.bodyParser());
   app.use(express.cookieParser());
@@ -66,28 +67,6 @@ articleProvider.save([
     
 });
 */
-
-app.get('/upload', function(req, res) {
-  res.render('admin/upload.ejs', {locals: {
-    title: '上传文件'
-  }});
-});
-
-app.post('/upload', function(req, res) {
-  // 获得文件的临时路径
-  var tmp_path = req.files.thumbnail.path;
-  // 指定文件上传后的目录 - 示例为"images"目录。 
-  var target_path = './public/images/' + req.files.thumbnail.name;
-  // 移动文件
-  fs.rename(tmp_path, target_path, function(err) {
-    if (err) throw err;
-    // 删除临时文件夹文件, 
-    fs.unlink(tmp_path, function() {
-        if (err) throw err;
-        res.send('文件上传至: ' + target_path + '，文件大小：' + req.files.thumbnail.size + ' 字节');
-    });
-  });
-}); 
 
 app.get('/', function(req, res) {
   articleProvider.findByPage(1, function(err, result) {
@@ -142,7 +121,7 @@ app.get('/archives', function(req, res) {
 app.get('/follow', function(req, res) {
   followProvider.findAll(function(err, result) {
     res.render('follow.ejs', {locals: {
-    title: '我关注的博客',
+    title: '我关注的',
     follows: result
   }});
   });
@@ -171,24 +150,72 @@ app.post('/blog/addComment', function(req, res) {
 
 // view need authentication
 app.get('/admin', checkAuth, function(req, res) {
-  res.render('admin/index.ejs', {locals: {
-    title: '管理后台'
-  }});
+  res.render('admin/index.ejs', {
+    title: '管理后台',
+    layout: 'layout_admin.ejs'
+  });
+});
+
+app.get('/admin/upload', checkAuth, function(req, res) {
+  fs.readdir(__dirname + '/public/images/', function(err, files) {
+    files.shift();
+    res.render('admin/upload.ejs', {
+      title: '上传文件',
+      files: files,
+      layout: 'layout_admin.ejs'
+    });
+  });
+ 
+});
+
+app.post('/admin/upload', checkAuth, function(req, res) {
+  // 获得文件的临时路径
+  var tmp_path = req.files.thumbnail.path;
+  // 指定文件上传后的目录 - 示例为"images"目录。 
+  var target_path = './public/images/' + req.files.thumbnail.name;
+  // 移动文件
+  fs.rename(tmp_path, target_path, function(err) {
+    if (err) throw err;
+    // 删除临时文件夹文件, 
+    fs.unlink(tmp_path, function() {
+        if (err) throw err;
+        //res.send('文件上传至: ' + target_path + '，文件大小：' + req.files.thumbnail.size + ' 字节');
+        res.redirect('/admin/upload');
+    });
+  });
+}); 
+
+app.get('/admin/upload/delete/:filename', checkAuth, function(req, res) {
+  fs.unlink(__dirname + '/public/images/' + req.params.filename, function(err) {
+    
+  });
+  res.redirect('/admin/upload');
+});
+
+// rename
+app.post('/admin/upload/rename', checkAuth, function(req, res) {
+  fs.rename(__dirname + '/public/images/' + req.body.oldfilename, 
+    __dirname + '/public/images/' + req.body.newfilename, 
+    function(err) {
+    res.redirect('/admin/upload');
+  });
 });
 
 app.get('/admin/blog', checkAuth, function(req, res) {
   articleProvider.findArchives(function(err, result) {
-    res.render('admin/blog/admin_blog_index.ejs', {locals: {
+    res.render('admin/blog/admin_blog_index.ejs', {
       title: '管理文章',
+      layout: 'layout_admin.ejs',
       archives: result
-    }});
+    });
   });
 });
 
 app.get('/admin/blog/new', checkAuth, function(req, res) {
-  res.render('admin/blog/admin_blog_new.ejs', {locals: {
-    title: '发布新文章'
-  }});
+  res.render('admin/blog/admin_blog_new.ejs', {
+    title: '发布新文章',
+    layout: 'layout_admin.ejs'
+  });
 });
 
 app.post('/admin/blog/new', checkAuth, function(req, res) {
@@ -202,11 +229,26 @@ app.post('/admin/blog/new', checkAuth, function(req, res) {
 
 app.get('/admin/blog/update/:id', checkAuth, function(req, res) {
   articleProvider.findById(req.params.id, function(err, article) {
-    res.render('admin/blog/admin_blog_update.ejs', {locals: {
+    res.render('admin/blog/admin_blog_update.ejs', {
       title: '更新文章',
+      layout: 'layout_admin.ejs',
       article: article
-    }});
+    });
   });
+});
+
+app.post('/admin/blog/update', checkAuth, function(req, res) {
+  articleProvider.update(req.body._id, req.body.title, req.body.body, function(err) {
+    res.redirect('/admin/blog/'+req.body._id);
+  });
+});
+
+app.post('/admin/blog/preview', checkAuth, function(req, res) {
+    res.render('admin/blog/admin_blog_preview.ejs', {locals: {
+      title: '文章预览',
+      article_title: req.body.title,
+      article_body: req.body.body
+    }});
 });
 
 app.get('/admin/blog/delete/:id', checkAuth, function(req, res) {
@@ -218,27 +260,28 @@ app.get('/admin/blog/delete/:id', checkAuth, function(req, res) {
 app.get('/admin/blog/:id', checkAuth, function(req, res) {
   articleProvider.findById(req.params.id, function(err, article) {
     res.render('admin/blog/admin_blog.ejs',{
-      locals: {
         title: article.title,
+        layout: 'layout_admin.ejs',
         article: article
-      }
     });
   });
 });
 
 app.get('/admin/follow', checkAuth, function(req, res) {
   followProvider.findAll(function(err, result) {
-    res.render('admin/follow/admin_follow_index.ejs', {locals: {
+    res.render('admin/follow/admin_follow_index.ejs', {
       title: '管理关注的博客',
+      layout: 'layout_admin.ejs',
       follows: result
-    }});
+    });
   });
 });
 
 app.get('/admin/follow/new', checkAuth, function(req, res) {
-  res.render('admin/follow/admin_follow_new.ejs', {locals: {
-    title: '发布新关注的博客'
-  }});
+  res.render('admin/follow/admin_follow_new.ejs', {
+    title: '发布新关注的博客',
+    layout: 'layout_admin.ejs',
+  });
 });
 
 app.post('/admin/follow/new', checkAuth, function(req, res) {
@@ -269,7 +312,7 @@ app.get('/admin/login', function(req, res) {
 
 app.post('/admin/login', function(req, res) {
   var post = req.body;
-  if(post.username == 'john' && post.pass == 'johnpassword') {
+  if(post.username == 'john' && post.pass == 'pass') {
     req.session.user_id = 'john';
     if(req.session.previous_url !== undefined) {
       res.redirect(req.session.previous_url);

@@ -73,7 +73,8 @@ ArticleProvider.prototype.findById = function(id, callback) {
 				if(err) {
 					callback(err);
 				} else {
-					article.created_at = article.created_at.Format('yyyy/MM/dd');
+					if(article.created_at)
+						article.created_at = article.created_at.Format('yyyy/MM/dd');
 					for(var i=0;i<article.comments.length; i++) {
 						article.comments[i].created_at = article.comments[i].created_at.Format('yyyy/MM/dd hh:mm:ss');
 					}
@@ -179,12 +180,13 @@ ArticleProvider.prototype.update = function(article_id, article_title, article_b
 		} else {
 			article_collection.update(
 				{
-					_id: article._id
+					_id: article_collection.db.bson_serializer.ObjectID.createFromHexString(article_id)
 				},
 		        {
 		        	"$set": {title: article_title, body: article_body}
 		        }
 			);
+			callback(null);
 		}
 	});
 };

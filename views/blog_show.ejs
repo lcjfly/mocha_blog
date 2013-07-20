@@ -23,7 +23,7 @@
 	<% article.comments.forEach(function(comment) { %>
 		<div class="card">
 			<div class="card_comment">
-				<span><a href="http://<%= comment.website %>"><%= comment.author%></a>:</span>
+				<span><a href="<%= comment.website %>"><%= comment.author%></a>:</span>
 				<span><%= comment.comment%></span>
 				<p><%= comment.created_at %></p>
 			</div>

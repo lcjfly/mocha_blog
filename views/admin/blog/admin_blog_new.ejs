@@ -2,12 +2,13 @@
 	<div class="card">
 		<div class="card_follow">
 			<h1><%= title%></h1>
-			<form id="form_follow_new" action="/admin/blog/new" method="post" accept-charset="utf-8">
+			<form id="form_blog_new" action="/admin/blog/new" method="post" accept-charset="utf-8">
 				<div>
 					<span>标题: </span>
 					<input type="text" name="title" id="editArticleTitle"></input><br />
 					<span>内容: </span>
-					<textarea name="body" rows="10" cols="30" id="editArticleBody"></textarea><br />
+					<textarea name="body" rows="20" id="editArticleBody"></textarea><br />
+					<a id="submit_preview_article" class="a_btn">预览</a>
 					<a id="submit_new_article" class="a_btn">发布</a>
 				</div>
 			</form>
@@ -19,7 +20,15 @@
 	$(function() {
 		document.querySelector('#submit_new_article').addEventListener('click', function(ev){
 		    ev.preventDefault();
-		    $('#form_follow_new').submit();
+		    $("#form_blog_new").attr("action","/admin/blog/new");
+		    $('#form_blog_new').submit();
+		}, false);
+
+		document.querySelector('#submit_preview_article').addEventListener('click', function(ev){
+		    ev.preventDefault();
+		    $("#form_blog_new").attr("action","/admin/blog/preview");
+    		$("#form_blog_new").attr("target","_blank");
+		    $('#form_blog_new').submit();
 		}, false);
 	});
 </script>

@@ -14,6 +14,7 @@ input{
 
 textarea {
   font-size: 1em;
+  width: 90%;
 }
 
 /* Flexible Images */
@@ -168,8 +169,14 @@ ul#navi {
 .card_archives,
 .card_follow,
 .card_login,
-.card_admin {
+.card_admin,
+.card_admin_navi {
   padding: 3%;
+}
+
+.card_comment {
+  padding: 3%;
+  font-size: .8em;
 }
 
 .card_follow ul,
@@ -183,10 +190,12 @@ ul#navi {
   line-height: 2em;
 }
 
-.card_comment {
-  padding: 1em;
-  font-size: .8em;
+.card_admin_navi ul li {
+  float: left;
+  padding-right: 2em;
 }
+
+
 
 .card_admin a {
   display: inline-block;

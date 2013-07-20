@@ -1,0 +1,17 @@
+--- 
+applications: 
+  .: 
+    name: lcjfly
+    mem: 64M
+    infra: ap-aws
+    services: 
+      mongodb-756eb: 
+        type: mongodb
+    framework: 
+      name: node
+      info: 
+        mem: 64M
+        exec: 
+        description: Node.js Application
+    url: ${name}.${target-base}
+    instances: 1

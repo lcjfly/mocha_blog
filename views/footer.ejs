@@ -1,0 +1,36 @@
+<div class="footer">
+  		<div class="footer_container">
+  			<p>Lovingly made by lu chenjie.</p>
+  			<p>
+          Thanks <a href="http://www.nodejs.org">NodeJS</a> , <a href="http://expressjs.com">Express</a> and <a href="http://www.mongodb.org">MongoDB</a>.
+        </p>
+        <p>
+          Website host by <a href="http://www.nodejitsu.com">Nodejitsu</a>, Database host by <a href="http://www.mongohq.com">mongoHQ</a>.
+        </p>
+  		</div>
+  	</div>
+
+    <a href="#" class="go-top">回到顶部</a>
+
+  <script>
+    $(document).ready(function() {
+      // Show or hide the sticky footer button
+      $(window).scroll(function() {
+        if ($(this).scrollTop() > 200) {
+          $('.go-top').fadeIn(200);
+        } else {
+          $('.go-top').fadeOut(200);
+        }
+      });
+      
+      // Animate the scroll to top
+      $('.go-top').click(function(event) {
+        event.preventDefault();
+        
+        $('html, body').animate({scrollTop: 0}, 300);
+      })
+    });
+  </script>
+
+  </body>
+</html>

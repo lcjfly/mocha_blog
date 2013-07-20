@@ -1,10 +1,17 @@
 {
-    "name": "application-name"
-  , "version": "0.0.1"
-  , "private": true
-  , "dependencies": {
-      "express": "2.5.11"
-    , "ejs": ">= 0.0.1"
-    , "mongodb": ">= 0.9.6-7"
-  }
+    "version": "0.0.1-15",
+    "private": true,
+    "dependencies": {
+        "express": "2.5.11",
+        "ejs": ">= 0.0.1",
+        "mongodb": ">= 0.9.6-7"
+    },
+    "name": "mocha_blog",
+    "scripts": {
+        "start": "node app.js"
+    },
+    "engines": {
+        "node": "0.8.x"
+    },
+    "subdomain": "lcjfly"
 }
