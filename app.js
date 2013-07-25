@@ -7,7 +7,6 @@ var express = require('express'),
     routes = require('./routes'),
     ArticleProvider = require('./articleprovider-mongodb').ArticleProvider,
     FollowProvider = require('./followprovider-mongodb').FollowProvider,
-    //partials =require('express-partials'),
     fs = require('fs');
 require('./date');
 
@@ -19,13 +18,16 @@ app.configure(function(){
   app.set('views', __dirname + '/views');
   app.set('view engine', 'ejs');
   app.set('layout', 'layout') // defaults to 'layout' 
-  //app.use(partials());
+  app.use(express.favicon(__dirname + '/public/images/favicon.ico'));
   app.use(express.bodyParser());
   app.use(express.cookieParser());
   app.use(express.session({ secret: 'something'}));
   app.use(express.methodOverride());
   app.use(app.router);
   app.use(express.static(__dirname + '/public'));
+  app.use(function(req, res, next){
+    res.redirect('/404/');
+  });
 });
 
 app.configure('development', function(){
@@ -326,6 +328,12 @@ app.post('/admin/login', function(req, res) {
 app.get('/admin/logout', function(req, res) {
   delete req.session.user_id;
   res.redirect('/');
+});
+
+app.get('/404/', function(req, res) {
+  res.render('404.ejs', {
+      layout: ''
+    });
 });
 
 var port = process.env.PORT || 3000;

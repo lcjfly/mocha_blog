@@ -101,7 +101,16 @@ ArticleProvider.prototype.findByPage = function(page_no, callback) {
 			}
 
 			for(var i=0; i<result.articles.length; i++) {
-				result.articles[i].created_at = result.articles[i].created_at.Format('yyyy/MM/dd');
+				var article = result.articles[i];
+				article.created_at = article.created_at.Format('yyyy/MM/dd');
+
+				// 控制显示概要内容
+				var index_more = article.body.indexOf('<!--more-->');
+				if(index_more != -1) {
+					article.body = article.body.substring(0, index_more);
+				}
+
+				
 			}
 
 			// 上一页页码

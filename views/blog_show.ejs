@@ -23,7 +23,13 @@
 	<% article.comments.forEach(function(comment) { %>
 		<div class="card">
 			<div class="card_comment">
-				<span><a href="<%= comment.website %>"><%= comment.author%></a>:</span>
+				<span>
+					<% if(comment.website !== undefined && comment.website.trim() !== '') { %>
+						<a href="<%= comment.website %>"><%= comment.author%></a>:
+					<% } else { %>
+						<%= comment.author%>:
+					<% } %>
+				</span>
 				<span><%= comment.comment%></span>
 				<p><%= comment.created_at %></p>
 			</div>

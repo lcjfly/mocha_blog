@@ -10,6 +10,7 @@ input{
   width: 20em;
   height: 2em;
   font-size: 1em;
+  max-width: 90%;
 }
 
 textarea {
@@ -104,6 +105,10 @@ ul#navi {
   padding-bottom: 1.5em;
 }
 
+.card_post .body p {
+  text-indent: 2em;
+}
+
 .card_post .comments_count {
   font-size: 1.2em;
 }
@@ -120,7 +125,7 @@ ul#navi {
 }
 
 .card_page {
-  padding: 1% 2%;
+  padding: .1% 2%;
 }
 
 #page_previous {
@@ -179,6 +184,10 @@ ul#navi {
   font-size: .8em;
 }
 
+.card_comment a {
+  color: #36A7DA;
+}
+
 .card_follow ul,
 .card_dream ul,
 .card_archives ul,
@@ -213,7 +222,7 @@ a.a_btn:hover {
   color: #555;
 }
 
-.card span {
+.card>div>span {
   display: inline-block;
   font-size: 1.5em;
   padding-bottom: .8em;
@@ -249,6 +258,10 @@ a.delete {
   display:inline-block;
 }
 
+a.read_more {
+  color: #36A7DA;
+  text-decoration: none;
+}
 
 /***********************************************************************************************/
 /* Go to top Button */

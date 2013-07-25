@@ -11,13 +11,16 @@
 					<%= article.created_at%>
 				</div>
 				<div class="body">
-					<section>
+					<article>
 						<%- article.body%>
-					</section>
+					</article>
 				</div>
 				<div class="comments_count">
 					<%= article.comments.length %> 条评论
 				</div>
+				<a class="read_more" href="/blog/<%= article._id%>">
+					阅读全文...
+				</a>
 			</div>
 		</div>
 	<% }) %>
